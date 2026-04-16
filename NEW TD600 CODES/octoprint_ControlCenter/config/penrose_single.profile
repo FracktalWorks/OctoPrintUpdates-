@@ -1,0 +1,34 @@
+axes:
+  e:
+    inverted: false
+    speed: 300
+  x:
+    inverted: false
+    speed: 6000
+  y:
+    inverted: false
+    speed: 6000
+  z:
+    inverted: true
+    speed: 3000
+color: default
+extruder:
+  count: 1
+  nozzleDiameter: 0.4
+  offsets:
+  - - 0.0
+    - 0.0
+  sharedNozzle: false
+heatedBed: true
+heatedChamber: false
+hasSecondaryHeaters: false
+id: penrose_single
+model: Penrose Series
+name: Penrose Single
+volume:
+  custom_box: false
+  depth: 250.0
+  formFactor: rectangular
+  height: 390.0
+  origin: lowerleft
+  width: 430.0
