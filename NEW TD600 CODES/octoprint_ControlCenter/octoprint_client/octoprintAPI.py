@@ -430,7 +430,7 @@ class octoprintAPI:
         headers = {'X-Api-Key': self.apiKey}
 
         try:
-            response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, timeout=5)
             response.raise_for_status()
             temp = response.json()
             logger.debug(f"OctoPrint version: {temp}")

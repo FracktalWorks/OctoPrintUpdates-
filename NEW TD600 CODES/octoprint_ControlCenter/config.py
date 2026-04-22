@@ -19,7 +19,7 @@ from collections import OrderedDict
 
 # Configuration settings
 ip = '127.0.0.1:5000'
-apiKey = 'B508534ED20348F090B4D0AD637D3660'   
+apiKey = 'eopPO91Ryx-p-vKXIics2t4SMRc7T0W_zJ8aEnyi7Jw'
 
 # Screen resolution settings
 SCREEN_WIDTH = 800

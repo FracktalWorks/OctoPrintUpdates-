@@ -103,25 +103,25 @@ class PrinterConfigManager:
                         printer_name = file[8:-4]  # Remove "PRINTER_" prefix and ".cfg" suffix
                         available_printers.append(printer_name)
 
-            # Also check Klipper's deployed config directory for any PRINTER_*.cfg
-            # files that may have been added or deployed directly on the Pi. This
-            # ensures the UI lists printers present in the active Klipper configs
-            # even if they are not packaged with the application firmware folder.
-            try:
-                if os.path.exists(self.klipper_config_path):
-                    for file in os.listdir(self.klipper_config_path):
-                        if file.startswith("PRINTER_") and file.endswith(".cfg"):
-                            printer_name = file[8:-4]
-                            if printer_name not in available_printers:
-                                available_printers.append(printer_name)
-            except Exception:
-                # Non-fatal: continue with whatever we found in the firmware folder
-                logger.debug("Could not list klipper config path for additional printers")
+                # Also check Klipper's deployed config directory for any PRINTER_*.cfg
+                # files that may have been added or deployed directly on the Pi. This
+                # ensures the UI lists printers present in the active Klipper configs
+                # even if they are not packaged with the application firmware folder.
+                try:
+                    if os.path.exists(self.klipper_config_path):
+                        for file in os.listdir(self.klipper_config_path):
+                            if file.startswith("PRINTER_") and file.endswith(".cfg"):
+                                printer_name = file[8:-4]
+                                if printer_name not in available_printers:
+                                    available_printers.append(printer_name)
+                except Exception:
+                    # Non-fatal: continue with whatever we found in the firmware folder
+                    logger.debug("Could not list klipper config path for additional printers")
 
-            logger.debug(f"Found {len(available_printers)} printer configurations")
+                logger.debug(f"Found {len(available_printers)} printer configurations")
             else:
                 logger.warning(f"Firmware path not found: {self.firmware_path}")
-                
+
         except Exception as e:
             logger.error(f"Error getting available printers: {e}")
             

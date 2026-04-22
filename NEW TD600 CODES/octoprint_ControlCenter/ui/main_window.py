@@ -1,8 +1,8 @@
 # ruff: noqa: I001
-from PyQt5.QtWidgets import QMainWindow, QSizePolicy, QStackedWidget, QVBoxLayout, QWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSizePolicy, QStackedWidget, QVBoxLayout, QWidget
 
 import ui.resources.resource_rc  # noqa: F401 - side-effect import for Qt resources
-from config import SCREEN_HEIGHT, SCREEN_WIDTH
 from ui.calibrate_screen.calibrate_screen import CalibrateScreen
 from ui.control_screen.control_screen import ControlScreen
 from ui.filament_management_screen.filamentManagementScreen import filamentManagementScreen
@@ -48,8 +48,18 @@ class MainWindow(QMainWindow):
         # Next screen for wizard-style multi-step flows
         self.next_screen = None
         self.dialogShown = False
-        self.setFixedSize(SCREEN_WIDTH, SCREEN_HEIGHT)  # Use config values for screen resolution
-        self.move(0, 0)  # Anchor to top-left corner of display
+        # Detect the actual primary screen geometry at runtime so the window
+        # fills the display exactly regardless of resolution or DPI.
+        screen = QApplication.primaryScreen()
+        screen_geo = screen.geometry()
+        self.logger.info(
+            f"Detected screen: {screen_geo.width()}x{screen_geo.height()} "
+            f"at ({screen_geo.x()},{screen_geo.y()})"
+        )
+        # Remove the window frame/title bar so there is no pixel offset.
+        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        # Position and size the window to exactly cover the screen.
+        self.setGeometry(screen_geo)
 
 
         self.loading_screen = LoadingScreen(self)
